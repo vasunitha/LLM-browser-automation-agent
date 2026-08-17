@@ -12,6 +12,13 @@ This project is built for the interface.ai take-home assignment
 ("Computer-Use Automation System"). Full design rationale lives in
 [PROJECT_PLAN.md](./PROJECT_PLAN.md) and [ARCHITECTURE.md](./ARCHITECTURE.md).
 
+## Live Application
+
+The Credit Union Teller Console is deployed on AWS Elastic Beanstalk:
+[http://llm-browser-automation-agent-prod.eba-wvvzkt5m.us-east-2.elasticbeanstalk.com/](http://llm-browser-automation-agent-prod.eba-wvvzkt5m.us-east-2.elasticbeanstalk.com/)
+
+![Live Application](docs/screenshots/live-app.png)
+
 ## Status: Phase 7 — Deterministic Replay complete
 
 The **Credit Union Teller Console** (Phase 3), the **Surface**
