@@ -1,0 +1,26 @@
+{
+  "runId": "30e16d60-6028-406d-a58e-9e343874548f",
+  "artifactId": "open-sub-account",
+  "artifactVersion": "1.0.0",
+  "startedAt": "2026-08-17T14:05:03.102Z",
+  "finishedAt": "2026-08-17T14:05:32.086Z",
+  "durationMs": 28984,
+  "inputs": {
+    "memberId": "1002",
+    "accountType": "sub_savings",
+    "nickname": "Vacation Fund",
+    "initialDeposit": "150.00"
+  },
+  "steps": [],
+  "outputs": {},
+  "policy": {
+    "riskLevel": "risky",
+    "classification": "approval_required",
+    "approvalDecision": "denied"
+  },
+  "status": "blocked",
+  "error": {
+    "code": "POLICY_DENIED",
+    "message": "Approval was denied for risky artifact \"open-sub-account\"."
+  }
+}

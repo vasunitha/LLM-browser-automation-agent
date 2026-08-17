@@ -1,0 +1,19 @@
+<%- include('partials/head', { title: 'Action Not Permitted' }) %>
+
+<div>
+  <p class="eyebrow">Member Services</p>
+  <h1>Action Not Permitted</h1>
+</div>
+
+<div class="card">
+  <div class="banner banner-error" role="alert">
+    <span class="banner-icon" aria-hidden="true">&#9940;</span>
+    <span>This member's account is restricted. Sub-account opening is not permitted.</span>
+  </div>
+  <p class="page-description">Contact a supervisor if you believe this restriction was applied in error.</p>
+  <div class="actions">
+    <a href="/members/<%= memberId %>" class="btn btn-primary">Back to Member Details</a>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

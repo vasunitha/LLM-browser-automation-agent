@@ -1,0 +1,81 @@
+<%- include('partials/head', { title: 'Open Sub-Account' }) %>
+
+<div>
+  <p class="eyebrow">Member Services</p>
+  <h1>Open Sub-Account</h1>
+  <p class="page-description">For <%= member.firstName %> <%= member.lastName %> (Member ID <%= member.id %>)</p>
+</div>
+
+<nav class="steps" aria-label="Progress">
+  <span class="step is-done"><span class="step-dot" aria-hidden="true"></span>Member Selected</span>
+  <span class="step is-active"><span class="step-dot" aria-hidden="true"></span>Account Details</span>
+  <span class="step"><span class="step-dot" aria-hidden="true"></span>Confirmation</span>
+</nav>
+
+<div class="card">
+  <% if (typeof errors !== 'undefined' && errors && Object.keys(errors).length > 0) { %>
+    <div class="banner banner-error" role="alert">
+      <span class="banner-icon" aria-hidden="true">&#9888;</span>
+      <span>Please fix the errors below.</span>
+    </div>
+  <% } %>
+
+  <form method="post" action="/members/<%= member.id %>/sub-account">
+    <div class="field">
+      <label for="accountType">Account Type</label>
+      <select
+        id="accountType"
+        name="accountType"
+        aria-invalid="<%= errors && errors.accountType ? 'true' : 'false' %>"
+        aria-describedby="accountType-error"
+      >
+        <option value="sub_savings" <%= values.accountType === 'sub_savings' ? 'selected' : '' %>>Sub-Savings</option>
+        <option value="sub_checking" <%= values.accountType === 'sub_checking' ? 'selected' : '' %>>Sub-Checking</option>
+      </select>
+      <% if (errors && errors.accountType) { %><p class="field-error" id="accountType-error"><%= errors.accountType %></p><% } %>
+    </div>
+
+    <div class="field">
+      <label for="nickname">Account Nickname</label>
+      <input
+        type="text"
+        id="nickname"
+        name="nickname"
+        value="<%= values.nickname || '' %>"
+        placeholder="e.g. Vacation Fund"
+        aria-invalid="<%= errors && errors.nickname ? 'true' : 'false' %>"
+        aria-describedby="nickname-error"
+      />
+      <% if (errors && errors.nickname) { %>
+        <p class="field-error" id="nickname-error"><%= errors.nickname %></p>
+      <% } else { %>
+        <p class="field-hint" id="nickname-error">A short label to help identify this account later.</p>
+      <% } %>
+    </div>
+
+    <div class="field">
+      <label for="initialDeposit">Initial Deposit (USD)</label>
+      <input
+        type="text"
+        id="initialDeposit"
+        name="initialDeposit"
+        value="<%= values.initialDeposit || '' %>"
+        placeholder="25.00"
+        aria-invalid="<%= errors && errors.initialDeposit ? 'true' : 'false' %>"
+        aria-describedby="initialDeposit-error"
+      />
+      <% if (errors && errors.initialDeposit) { %>
+        <p class="field-error" id="initialDeposit-error"><%= errors.initialDeposit %></p>
+      <% } else { %>
+        <p class="field-hint" id="initialDeposit-error">Minimum opening deposit is $25.00.</p>
+      <% } %>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Open Sub-Account</button>
+      <a href="/members/<%= member.id %>" class="btn btn-secondary">Back to Member Details</a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/foot') %>

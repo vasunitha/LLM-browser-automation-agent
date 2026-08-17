@@ -1,0 +1,78 @@
+{
+  "runId": "5bd1d8ed-351a-4b2e-bb2f-13bf8a2caf27",
+  "artifactId": "get-savings-balance",
+  "artifactVersion": "1.0.0",
+  "startedAt": "2026-08-17T14:12:09.815Z",
+  "finishedAt": "2026-08-17T14:12:19.118Z",
+  "durationMs": 9302,
+  "inputs": {
+    "memberId": "1001"
+  },
+  "steps": [
+    {
+      "stepId": 1,
+      "action": "navigate",
+      "attempt": 1,
+      "outcome": {
+        "status": "ok",
+        "value": "http://localhost:3000/"
+      }
+    },
+    {
+      "stepId": 2,
+      "action": "type",
+      "attempt": 1,
+      "outcome": {
+        "status": "ok"
+      }
+    },
+    {
+      "stepId": 3,
+      "action": "click",
+      "attempt": 1,
+      "outcome": {
+        "status": "ok"
+      }
+    },
+    {
+      "stepId": 4,
+      "action": "read",
+      "attempt": 1,
+      "outcome": {
+        "status": "ok",
+        "value": "$482.17"
+      }
+    }
+  ],
+  "outputs": {
+    "savingsBalance": "$482.17"
+  },
+  "checkpoint": {
+    "satisfied": true,
+    "conditions": [
+      {
+        "condition": {
+          "type": "urlMatches",
+          "pattern": "/members/{{memberId}}"
+        },
+        "satisfied": true
+      },
+      {
+        "condition": {
+          "type": "textPresent",
+          "text": "SAVINGS BALANCE:"
+        },
+        "satisfied": true
+      }
+    ]
+  },
+  "policy": {
+    "riskLevel": "risky",
+    "classification": "approval_required",
+    "approvalDecision": "approved"
+  },
+  "outcomeClassification": {
+    "kind": "success"
+  },
+  "status": "success"
+}

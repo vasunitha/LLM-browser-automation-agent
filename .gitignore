@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Environment
+.env
+.env.local
+
+# Runtime data (SQLite db, scratch run output)
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Evidence: only curated evidence/discovery, evidence/replay, evidence/errors
+# are committed (see PROJECT_PLAN.md -> "Evidence directory policy"); nothing
+# else currently writes elsewhere under evidence/, so there is nothing to
+# ignore here today.
+
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Coverage
+coverage/
+.claude/

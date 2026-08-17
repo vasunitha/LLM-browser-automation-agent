@@ -1,0 +1,19 @@
+<%- include('partials/head', { title: 'Member Not Found' }) %>
+
+<div>
+  <p class="eyebrow">Member Services</p>
+  <h1>Member Not Found</h1>
+</div>
+
+<div class="card">
+  <div class="banner banner-error" role="alert">
+    <span class="banner-icon" aria-hidden="true">&#9888;</span>
+    <span>No member found with ID "<%= memberId %>".</span>
+  </div>
+  <p class="page-description">Double-check the member ID and try again.</p>
+  <div class="actions">
+    <a href="/" class="btn btn-primary">Search Again</a>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

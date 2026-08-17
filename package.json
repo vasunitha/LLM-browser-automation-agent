@@ -1,0 +1,37 @@
+{
+  "name": "computer-use-automation-system",
+  "version": "0.1.0",
+  "description": "Computer-use automation system: LLM-driven discovery, versioned capability artifacts, and deterministic replay against a UI-only target application.",
+  "private": true,
+  "main": "dist/index.js",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc -p tsconfig.json && tsx scripts/copy-views.ts",
+    "postinstall": "npm run build",
+    "start": "node dist/index.js",
+    "db:seed": "tsx src/app/db/seed.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.117.1",
+    "better-sqlite3": "^11.3.0",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.0",
+    "playwright": "^1.62.1",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.47.0",
+    "@types/better-sqlite3": "^7.6.11",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.5.5",
+    "vitest": "^2.1.1"
+  }
+}

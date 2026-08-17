@@ -1,0 +1,97 @@
+{
+  "schemaVersion": "1.0",
+  "id": "get-savings-balance",
+  "name": "Get Savings Balance",
+  "description": "Discovered by the Phase 6 LLM agent for the goal: \"Look up member 1001 and read their current savings balance.\"",
+  "version": "1.0.0",
+  "createdAt": "2026-08-16T19:21:27.632Z",
+  "riskLevel": "risky",
+  "target": {
+    "appId": "credit-union-teller-console",
+    "baseUrl": "http://localhost:3000",
+    "surfaceType": "web"
+  },
+  "inputs": [
+    {
+      "name": "memberId",
+      "type": "string",
+      "required": true,
+      "description": "Discovered input \"memberId\", parameterized from a live discovery run.",
+      "example": "1001"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "savingsBalance",
+      "type": "string",
+      "sourceStepId": 4,
+      "description": "Discovered output \"savingsBalance\", parameterized from a live discovery run."
+    }
+  ],
+  "steps": [
+    {
+      "stepId": 1,
+      "action": "navigate",
+      "description": "Open the target application.",
+      "url": "/"
+    },
+    {
+      "stepId": 2,
+      "action": "type",
+      "target": {
+        "strategies": [
+          {
+            "type": "role",
+            "role": "textbox",
+            "name": "Member ID"
+          }
+        ]
+      },
+      "value": "{{memberId}}"
+    },
+    {
+      "stepId": 3,
+      "action": "click",
+      "target": {
+        "strategies": [
+          {
+            "type": "role",
+            "role": "button",
+            "name": "Search"
+          }
+        ]
+      }
+    },
+    {
+      "stepId": 4,
+      "action": "read",
+      "target": {
+        "strategies": [
+          {
+            "type": "label",
+            "text": "SAVINGS BALANCE:"
+          },
+          {
+            "type": "text",
+            "text": "$482.17"
+          }
+        ]
+      },
+      "outputRef": "savingsBalance"
+    }
+  ],
+  "checkpoint": {
+    "description": "Verified against the discovery run's final URL and a confirmed on-page text snippet.",
+    "all": [
+      {
+        "type": "urlMatches",
+        "pattern": "/members/{{memberId}}"
+      },
+      {
+        "type": "textPresent",
+        "text": "SAVINGS BALANCE:"
+      }
+    ]
+  },
+  "businessOutcomes": []
+}

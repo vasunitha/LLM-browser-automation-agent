@@ -1,0 +1,35 @@
+# Elastic Beanstalk deployment bundle exclusions.
+# dist/ is intentionally excluded — postinstall (package.json) rebuilds it
+# on the EB instance itself via `npm run build`, so shipping a stale local
+# build would be redundant at best, wrong at worst.
+node_modules/
+dist/
+
+# Environment / secrets — set via EB environment properties instead, never committed
+.env
+.env.local
+
+# Local runtime data — the instance filesystem is ephemeral anyway; see
+# .platform/hooks/postdeploy/01_seed_db.sh for how the DB gets (re)seeded
+data/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# Playwright / test output — not part of the running application
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+coverage/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*

@@ -1,0 +1,66 @@
+{
+  "runId": "31d021dd-f632-46f6-8348-c0380202de1e",
+  "artifactId": "get-savings-balance",
+  "artifactVersion": "1.0.0",
+  "startedAt": "2026-08-16T22:00:03.390Z",
+  "finishedAt": "2026-08-16T22:00:04.706Z",
+  "durationMs": 1316,
+  "inputs": {
+    "memberId": "1001"
+  },
+  "steps": [
+    {
+      "stepId": 1,
+      "action": "navigate",
+      "outcome": {
+        "status": "ok",
+        "value": "http://localhost:3000/"
+      }
+    },
+    {
+      "stepId": 2,
+      "action": "type",
+      "outcome": {
+        "status": "ok"
+      }
+    },
+    {
+      "stepId": 3,
+      "action": "click",
+      "outcome": {
+        "status": "ok"
+      }
+    },
+    {
+      "stepId": 4,
+      "action": "read",
+      "outcome": {
+        "status": "ok",
+        "value": "$482.17"
+      }
+    }
+  ],
+  "outputs": {
+    "savingsBalance": "$482.17"
+  },
+  "checkpoint": {
+    "satisfied": true,
+    "conditions": [
+      {
+        "condition": {
+          "type": "urlMatches",
+          "pattern": "/members/{{memberId}}"
+        },
+        "satisfied": true
+      },
+      {
+        "condition": {
+          "type": "textPresent",
+          "text": "SAVINGS BALANCE:"
+        },
+        "satisfied": true
+      }
+    ]
+  },
+  "status": "success"
+}

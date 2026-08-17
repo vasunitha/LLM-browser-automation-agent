@@ -1,0 +1,29 @@
+<%- include('partials/head', { title: 'Sub-Account Confirmation' }) %>
+
+<div>
+  <p class="eyebrow">Member Services</p>
+  <h1>Sub-Account Opened</h1>
+</div>
+
+<div class="banner banner-success" role="status">
+  <span class="banner-icon" aria-hidden="true">&#10003;</span>
+  <span>Sub-account opened successfully.</span>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h2>Account Summary</h2>
+  </div>
+  <div class="review-list">
+    <div class="review-row"><span class="review-label">Account Number</span><span class="review-value"><%= account.id %></span></div>
+    <div class="review-row"><span class="review-label">Account Type</span><span class="review-value"><%= account.accountType.replace('_', ' ') %></span></div>
+    <div class="review-row"><span class="review-label">Nickname</span><span class="review-value"><%= account.nickname %></span></div>
+    <div class="review-row"><span class="review-label">Opening Balance</span><span class="review-value"><%= balanceDisplay %></span></div>
+    <div class="review-row"><span class="review-label">Member</span><span class="review-value"><%= member.firstName %> <%= member.lastName %> (ID <%= member.id %>)</span></div>
+  </div>
+  <div class="actions">
+    <a href="/members/<%= member.id %>" class="btn btn-primary">Back to Member Details</a>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

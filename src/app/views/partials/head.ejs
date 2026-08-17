@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= title %> — Credit Union Teller Console</title>
+  <style>
+    /* ---------- Design tokens ---------- */
+    :root {
+      --color-bg: #f4f6f9;
+      --color-surface: #ffffff;
+      --color-surface-alt: #f8fafc;
+      --color-border: #e2e8f0;
+      --color-border-strong: #cbd5e1;
+      --color-primary: #0f2a4a;
+      --color-primary-dark: #0a1e37;
+      --color-primary-light: #e8eef7;
+      --color-accent: #2f6fed;
+      --color-accent-dark: #1f52c2;
+      --color-text: #16202e;
+      --color-text-muted: #5b6b80;
+      --color-text-faint: #8896a6;
+      --color-success-bg: #eafaf1;
+      --color-success-text: #146c2e;
+      --color-success-border: #b7ecc8;
+      --color-error-bg: #fdecea;
+      --color-error-text: #b3261e;
+      --color-error-border: #f3c1ba;
+      --color-warning-bg: #fff8e6;
+      --color-warning-text: #92600a;
+      --color-warning-border: #f5e0a3;
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(15, 42, 74, 0.06), 0 1px 1px rgba(15, 42, 74, 0.04);
+      --shadow-md: 0 6px 16px rgba(15, 42, 74, 0.08);
+      --shadow-lg: 0 16px 40px rgba(15, 42, 74, 0.14);
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 24px;
+      --space-6: 32px;
+      --space-8: 48px;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      --transition-fast: 120ms ease;
+      --transition-base: 200ms ease;
+    }
+
+    /* ---------- Reset & base ---------- */
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      font-size: 15px;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--color-accent); }
+    ul { margin: 0; padding: 0; list-style: none; }
+    a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 3px solid rgba(47, 111, 237, 0.4);
+      outline-offset: 2px;
+    }
+
+    h1 { font-size: 1.6rem; font-weight: 700; margin: 0 0 var(--space-1); letter-spacing: -0.01em; }
+    h2 { font-size: 1.05rem; font-weight: 600; margin: 0; }
+    .eyebrow {
+      text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.72rem;
+      font-weight: 700; color: var(--color-accent); margin: 0 0 var(--space-2);
+    }
+    .page-description { color: var(--color-text-muted); margin: 0; font-size: 0.92rem; }
+
+    /* ---------- App shell ---------- */
+    .shell { min-height: 100vh; display: flex; flex-direction: column; }
+    .shell-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--space-6); height: 64px;
+      background: var(--color-primary); color: #fff;
+      box-shadow: var(--shadow-sm); flex-shrink: 0;
+    }
+    .brand { display: flex; align-items: center; gap: var(--space-3); text-decoration: none; color: inherit; }
+    .brand-mark {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 36px; height: 36px; border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.18);
+      font-weight: 700; font-size: 0.85rem; letter-spacing: 0.02em; flex-shrink: 0;
+    }
+    .brand-text { display: flex; flex-direction: column; line-height: 1.25; }
+    .brand-name { font-weight: 600; font-size: 0.92rem; }
+    .brand-tag { font-size: 0.7rem; color: rgba(255, 255, 255, 0.65); text-transform: uppercase; letter-spacing: 0.06em; }
+    .shell-header-meta {
+      font-size: 0.78rem; color: rgba(255, 255, 255, 0.75);
+      padding: var(--space-1) var(--space-3);
+      border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 999px;
+      white-space: nowrap;
+    }
+    .shell-main { flex: 1; display: flex; justify-content: center; padding: var(--space-8) var(--space-4); }
+    .page { width: 100%; max-width: 720px; display: flex; flex-direction: column; gap: var(--space-6); }
+
+    /* ---------- Cards ---------- */
+    .card {
+      background: var(--color-surface); border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); padding: var(--space-6);
+    }
+    .card > * + * { margin-top: var(--space-5); }
+    .card-header { display: flex; flex-direction: column; gap: var(--space-1); }
+
+    /* ---------- Forms ---------- */
+    .field { margin-bottom: var(--space-4); }
+    .field:last-of-type { margin-bottom: 0; }
+    label { display: block; font-weight: 600; font-size: 0.85rem; margin-bottom: var(--space-2); }
+    .field-hint { font-size: 0.8rem; color: var(--color-text-muted); margin: var(--space-1) 0 0; }
+    input[type="text"], input[type="number"], select {
+      width: 100%; padding: 0.65rem 0.85rem; font-size: 0.95rem; font-family: inherit;
+      color: var(--color-text); background: var(--color-surface);
+      border: 1px solid var(--color-border-strong); border-radius: var(--radius-md);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    input::placeholder { color: var(--color-text-faint); }
+    input:hover, select:hover { border-color: var(--color-text-faint); }
+    input:focus, select:focus {
+      outline: none; border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(47, 111, 237, 0.15);
+    }
+    input[aria-invalid="true"], select[aria-invalid="true"] { border-color: var(--color-error-text); }
+    input[aria-invalid="true"]:focus, select[aria-invalid="true"]:focus {
+      box-shadow: 0 0 0 3px rgba(179, 38, 30, 0.15);
+    }
+    .field-error { color: var(--color-error-text); font-size: 0.8rem; margin: var(--space-1) 0 0; font-weight: 500; }
+    .form-actions { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; margin-top: var(--space-6); }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: var(--space-2);
+      padding: 0.65rem 1.25rem; font-size: 0.9rem; font-weight: 600;
+      border-radius: var(--radius-md); border: 1px solid transparent; cursor: pointer;
+      text-decoration: none; font-family: inherit;
+      transition: background var(--transition-fast), border-color var(--transition-fast),
+        transform var(--transition-fast), box-shadow var(--transition-fast);
+    }
+    .btn-primary { background: var(--color-accent); color: #fff; box-shadow: var(--shadow-sm); }
+    .btn-primary:hover { background: var(--color-accent-dark); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-secondary { background: var(--color-surface); color: var(--color-text); border-color: var(--color-border-strong); }
+    .btn-secondary:hover { background: var(--color-surface-alt); border-color: var(--color-text-faint); }
+    .btn-block { width: 100%; }
+    .actions { display: flex; gap: var(--space-3); align-items: center; flex-wrap: wrap; }
+    .link-back { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; font-weight: 600; color: var(--color-text-muted); text-decoration: none; }
+    .link-back:hover { color: var(--color-accent); }
+
+    /* ---------- Banners / alerts ---------- */
+    .banner {
+      display: flex; gap: var(--space-3); align-items: flex-start;
+      padding: var(--space-4); border-radius: var(--radius-md); border: 1px solid; font-size: 0.88rem;
+    }
+    .banner-icon { font-size: 1.05rem; line-height: 1; margin-top: 1px; flex-shrink: 0; }
+    .banner-error { background: var(--color-error-bg); border-color: var(--color-error-border); color: var(--color-error-text); }
+    .banner-success { background: var(--color-success-bg); border-color: var(--color-success-border); color: var(--color-success-text); }
+    .banner-warning { background: var(--color-warning-bg); border-color: var(--color-warning-border); color: var(--color-warning-text); }
+
+    /* ---------- Status pills ---------- */
+    .pill {
+      display: inline-flex; align-items: center; padding: 0.2rem 0.65rem; border-radius: 999px;
+      font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; border: 1px solid;
+    }
+    .pill-active { background: var(--color-success-bg); color: var(--color-success-text); border-color: var(--color-success-border); }
+    .pill-restricted { background: var(--color-error-bg); color: var(--color-error-text); border-color: var(--color-error-border); }
+    .pill-pending { background: var(--color-warning-bg); color: var(--color-warning-text); border-color: var(--color-warning-border); }
+    .pill-closed { background: var(--color-surface-alt); color: var(--color-text-faint); border-color: var(--color-border-strong); }
+
+    /* ---------- Member identity ---------- */
+    .identity { display: flex; align-items: center; gap: var(--space-4); }
+    .identity-avatar {
+      width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+      background: var(--color-primary-light); color: var(--color-primary);
+      display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.05rem;
+    }
+    .identity-name { font-size: 1.25rem; font-weight: 700; margin: 0; }
+    .identity-meta { color: var(--color-text-muted); font-size: 0.85rem; margin: 2px 0 0; display: flex; align-items: center; gap: var(--space-2); }
+
+    /* ---------- Balance highlight ---------- */
+    .balance-card {
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+      color: #fff; border-radius: var(--radius-lg); padding: var(--space-6); box-shadow: var(--shadow-md);
+    }
+    .balance-label { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.06em; color: rgba(255, 255, 255, 0.7); margin: 0; }
+    .balance-value { font-size: 2.1rem; font-weight: 700; letter-spacing: -0.01em; margin: var(--space-1) 0 0; }
+    .balance-sub { font-size: 0.8rem; color: rgba(255, 255, 255, 0.65); margin-top: var(--space-2); }
+
+    /* ---------- Metadata grid ---------- */
+    .meta-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--space-4); }
+    .meta-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-faint); margin: 0 0 4px; font-weight: 700; }
+    .meta-value { font-size: 0.92rem; font-weight: 600; color: var(--color-text); margin: 0; }
+
+    /* ---------- Account rows ---------- */
+    .account-list { display: flex; flex-direction: column; gap: var(--space-3); }
+    .account-row {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--space-3);
+      padding: var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius-md);
+      background: var(--color-surface-alt);
+    }
+    .account-row-name { font-weight: 600; font-size: 0.9rem; margin: 0; }
+    .account-row-type { font-size: 0.78rem; color: var(--color-text-muted); margin: 2px 0 0; text-transform: capitalize; }
+    .account-row-balance { font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+
+    /* ---------- Step indicator ---------- */
+    .steps { display: flex; flex-wrap: wrap; gap: var(--space-5); }
+    .step { display: flex; align-items: center; gap: var(--space-2); font-size: 0.78rem; color: var(--color-text-faint); font-weight: 600; }
+    .step-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-border-strong); flex-shrink: 0; }
+    .step.is-active { color: var(--color-accent); }
+    .step.is-active .step-dot { background: var(--color-accent); }
+    .step.is-done { color: var(--color-success-text); }
+    .step.is-done .step-dot { background: var(--color-success-text); }
+
+    /* ---------- Review rows (confirmation screens) ---------- */
+    .review-list { display: flex; flex-direction: column; }
+    .review-row { display: flex; justify-content: space-between; gap: var(--space-4); padding: var(--space-3) 0; border-bottom: 1px solid var(--color-border); font-size: 0.9rem; }
+    .review-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .review-row:first-child { padding-top: 0; }
+    .review-label { color: var(--color-text-muted); }
+    .review-value { font-weight: 600; text-align: right; }
+
+    /* ---------- Empty state ---------- */
+    .empty-state { text-align: center; padding: var(--space-5) var(--space-4); color: var(--color-text-muted); }
+    .empty-state-icon { font-size: 1.5rem; margin-bottom: var(--space-2); }
+    .empty-state p { margin: 0; font-size: 0.88rem; }
+
+    /* ---------- Responsive ---------- */
+    @media (max-width: 640px) {
+      .shell-header { padding: 0 var(--space-4); }
+      .shell-header-meta { display: none; }
+      .shell-main { padding: var(--space-5) var(--space-3); }
+      .card { padding: var(--space-4); }
+      .balance-value { font-size: 1.7rem; }
+      .identity { flex-direction: column; align-items: flex-start; text-align: left; }
+      .review-row { flex-direction: column; gap: var(--space-1); }
+      .review-value { text-align: left; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="shell-header">
+      <a class="brand" href="/">
+        <span class="brand-mark" aria-hidden="true">CU</span>
+        <span class="brand-text">
+          <span class="brand-name">Credit Union Teller Console</span>
+          <span class="brand-tag">Member Services</span>
+        </span>
+      </a>
+      <span class="shell-header-meta">Teller Session</span>
+    </header>
+    <main class="shell-main">
+      <div class="page">

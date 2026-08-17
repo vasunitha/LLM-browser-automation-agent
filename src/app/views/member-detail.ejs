@@ -1,0 +1,68 @@
+<%- include('partials/head', { title: 'Member Details' }) %>
+
+<div>
+  <p class="eyebrow">Member Services</p>
+  <h1>Member Profile</h1>
+</div>
+
+<div class="card">
+  <div class="identity">
+    <div class="identity-avatar" aria-hidden="true"><%= member.firstName.charAt(0) %><%= member.lastName.charAt(0) %></div>
+    <div>
+      <p class="identity-name"><%= member.firstName %> <%= member.lastName %></p>
+      <p class="identity-meta">
+        Member ID <%= member.id %>
+        <span class="pill pill-<%= member.status %>"><%= member.status %></span>
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="banner banner-success" role="status">
+  <span class="banner-icon" aria-hidden="true">&#10003;</span>
+  <span>Member details loaded successfully.</span>
+</div>
+
+<% if (savingsAccount) { %>
+<div class="balance-card">
+  <p class="balance-label">Savings Balance:</p>
+  <p class="balance-value"><strong><%= savingsBalanceDisplay %></strong></p>
+  <p class="balance-sub">Primary savings account &middot; <%= savingsAccount.status %></p>
+</div>
+<% } else { %>
+<div class="card">
+  <p class="page-description">No savings account on file.</p>
+</div>
+<% } %>
+
+<% if (subAccounts.length > 0) { %>
+<div class="card">
+  <div class="card-header">
+    <h2>Sub-Accounts</h2>
+  </div>
+  <div class="account-list">
+    <% subAccounts.forEach(function (acct) { %>
+    <div class="account-row">
+      <div>
+        <p class="account-row-name"><%= acct.nickname || acct.accountType %></p>
+        <p class="account-row-type"><%= acct.accountType.replace('_', ' ') %> &middot; <%= acct.status %></p>
+      </div>
+      <span class="account-row-balance"><%= acct.balanceDisplay %></span>
+    </div>
+    <% }); %>
+  </div>
+</div>
+<% } %>
+
+<div class="card">
+  <div class="card-header">
+    <h2>Actions</h2>
+    <p class="page-description">Open a new sub-account for this member.</p>
+  </div>
+  <div class="actions">
+    <a href="/members/<%= member.id %>/sub-account/new" class="btn btn-primary">Open Sub-Account</a>
+    <a href="/" class="link-back">&larr; Back to Search</a>
+  </div>
+</div>
+
+<%- include('partials/foot') %>

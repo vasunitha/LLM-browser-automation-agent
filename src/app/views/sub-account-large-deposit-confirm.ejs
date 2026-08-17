@@ -1,0 +1,29 @@
+<%- include('partials/head', { title: 'Confirm Large Deposit' }) %>
+
+<div>
+  <p class="eyebrow">Member Services</p>
+  <h1>Confirm Large Deposit</h1>
+</div>
+
+<div class="card">
+  <div class="banner banner-warning" role="alert">
+    <span class="banner-icon" aria-hidden="true">&#9888;</span>
+    <span>
+      The initial deposit of <strong><%= depositDisplay %></strong> exceeds the
+      standard threshold of <%= thresholdDisplay %>. Please confirm you want to
+      proceed.
+    </span>
+  </div>
+
+  <form method="post" action="/members/<%= member.id %>/sub-account/confirm-large-deposit">
+    <input type="hidden" name="accountType" value="<%= values.accountType %>" />
+    <input type="hidden" name="nickname" value="<%= values.nickname %>" />
+    <input type="hidden" name="initialDeposit" value="<%= values.initialDeposit %>" />
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Confirm and Open Account</button>
+      <a href="/members/<%= member.id %>/sub-account/new" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/foot') %>
