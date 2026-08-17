@@ -10,7 +10,6 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc -p tsconfig.json && tsx scripts/copy-views.ts",
-    "postinstall": "npm run build",
     "start": "node dist/index.js",
     "db:seed": "tsx src/app/db/seed.ts",
     "test": "vitest run",
